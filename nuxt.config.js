@@ -1,3 +1,5 @@
+import EventService from './services/EventService.js'
+
 export default {
   mode: 'universal',
   /*
@@ -55,5 +57,15 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
+  },
+  generate: {
+    // what if there is like milion events??????
+    routes: () => {
+      return EventService.getEvents().then((response) => {
+        return response.data.map((event) => {
+          return '/event/' + event.id
+        })
+      })
+    }
   }
 }
